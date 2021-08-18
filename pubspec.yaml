@@ -1,7 +1,8 @@
 name: dynamic_list_item
-description: A new Flutter package project.
+description: A dynamic list item for who wants default platform styling within Flutter apps.
 version: 0.0.1
-homepage:
+homepage: 'https://github.com/sems/dynamic_list_item'
+issue_tracker: 'https://github.com/sems/dynamic_list_item/issues'
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -14,6 +15,5 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 flutter:
