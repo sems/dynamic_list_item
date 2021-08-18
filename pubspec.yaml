@@ -3,6 +3,7 @@ description: A dynamic list item for who wants default platform styling within F
 version: 0.0.1
 homepage: 'https://github.com/sems/dynamic_list_item'
 issue_tracker: 'https://github.com/sems/dynamic_list_item/issues'
+maintainer: Sem Spanhaak (@sems)
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
