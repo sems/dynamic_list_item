@@ -1,7 +1,7 @@
-import 'package:dynamic_list_item/common/list_item_position.dart';
-import 'package:dynamic_list_item/dynamic_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dynamic_list_item/dynamic_list_item.dart';
 
 void main() => runApp(MyApp());
 
