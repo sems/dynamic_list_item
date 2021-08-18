@@ -10,9 +10,9 @@ typedef CustomListItemCallback = void Function();
 
 class DynamicListItem extends StatefulWidget {
   final String title;
-  final Widget ?trailing;
-  final ListItemPostition ?position;
-  final CustomListItemCallback ?callback;
+  final Widget? trailing;
+  final ListItemPostition? position;
+  final CustomListItemCallback? callback;
   final Constants constants = new Constants();
 
   DynamicListItem({required this.title, this.trailing, this.position, this.callback});
@@ -44,13 +44,13 @@ class _DynamicListItemState extends State<DynamicListItem> {
         case ListItemPostition.Top:
           _borderRadius = BorderRadius.only(
             topLeft: Radius.circular(_constantPadding),
-            topRight: Radius.circular(_constantPadding)
+            topRight: Radius.circular(_constantPadding),
           );
           break;
         case ListItemPostition.Bottom:
           _borderRadius = BorderRadius.only(
             bottomLeft: Radius.circular(_constantPadding),
-            bottomRight: Radius.circular(_constantPadding)
+            bottomRight: Radius.circular(_constantPadding),
           );
           break;
         case ListItemPostition.StandAlone:
