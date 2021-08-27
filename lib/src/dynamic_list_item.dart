@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,10 @@ class DynamicListItem extends StatefulWidget {
   final Widget? trailing;
   final ListItemPostition? position;
   final CustomListItemCallback? callback;
+  final bool? testing;
   final Constants constants = new Constants();
 
-  DynamicListItem({required this.title, this.trailing, this.position, this.callback});
+  DynamicListItem({required this.title, this.trailing, this.position, this.callback, this.testing});
   @override
   State<StatefulWidget> createState() => _DynamicListItemState();
 }
@@ -115,8 +117,8 @@ class _DynamicListItemState extends State<DynamicListItem> {
         },
       );
     } 
-    // Android
-    return Container(
+
+    Widget androidReturn = Container(
       color: Colors.white,
       child: Material(
         color: Colors.transparent,
@@ -143,5 +145,13 @@ class _DynamicListItemState extends State<DynamicListItem> {
         ),
       ),
     );
+    
+    return widget.testing == true && widget.testing != null ? new MediaQuery(
+      data: new MediaQueryData.fromWindow(ui.window), 
+      child: new Directionality(
+        textDirection: TextDirection.rtl, 
+        child:  androidReturn 
+      )
+    ) : androidReturn;
   }
 }
