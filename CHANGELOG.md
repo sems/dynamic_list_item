@@ -1,3 +1,6 @@
+## 0.0.4
+* Added widget tests.
+* Removed unused variables.
 ## 0.0.3
 * Made a single export of the necessary files.
 * Updated the example.
