@@ -1,3 +1,5 @@
+## 0.0.5
+* Now `Divider` is automaticly included on Android.
 ## 0.0.4
 * Added widget tests.
 * Removed unused variables.

@@ -120,36 +120,49 @@ class _DynamicListItemState extends State<DynamicListItem> {
 
     Widget androidReturn = Container(
       color: Colors.white,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  widget.title,
-                  style: widget.constants.androidPrimaryTextStyle,
-                ),
+      child: Column(
+        children: [
+          widget.position == ListItemPostition.Top || widget.position == ListItemPostition.StandAlone 
+            ? Divider( height: 1) 
+            : Container(),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      widget.title,
+                      style: widget.constants.androidPrimaryTextStyle,
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                      padding: EdgeInsets.only(right: 20),
+                      child: widget.trailing,
+                    ),
+                  ),
+                ],
               ),
-              Flexible(
-                child: Container(
-                  padding: EdgeInsets.only(right: 20),
-                  child: widget.trailing,
-                ),
-              ),
-            ],
+              onTap: widget.callback,
+            ),
           ),
-          onTap: widget.callback,
-        ),
+          widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle 
+            ? Divider( height: 1, indent: 16.0 ) 
+            : Container(),
+          widget.position == ListItemPostition.Bottom || widget.position == ListItemPostition.StandAlone 
+            ? Divider(height: 1) 
+            : Container(),
+        ],
       ),
     );
     
     return widget.testing == true && widget.testing != null ? new MediaQuery(
       data: new MediaQueryData.fromWindow(ui.window), 
       child: new Directionality(
-        textDirection: TextDirection.rtl, 
+        textDirection: TextDirection.ltr, 
         child:  androidReturn 
       )
     ) : androidReturn;
