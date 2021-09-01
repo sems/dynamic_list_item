@@ -1,7 +1,7 @@
 # Dynamic List Item
 
 [![Flutter Analyze & Test](https://github.com/sems/dynamic_list_item/actions/workflows/flutter-test.yml/badge.svg?branch=master)](https://github.com/sems/dynamic_list_item/actions/workflows/flutter-test.yml)
-![Pub Version](https://img.shields.io/pub/v/dynamic_list_item)
+[![Pub Version](https://img.shields.io/pub/v/dynamic_list_item)](https://pub.dev/packages/dynamic_list_item)
 
 A dynamic list item for who wants default platform styling within Flutter apps.
 
