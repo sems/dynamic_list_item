@@ -14,7 +14,7 @@ The `DynamicListItem` widget has the following parameters:
 - `@required title`: Used for the primary label in the list item.
 - `trailing`: Trailing content within the list item. For example, an icon or a switch widget.
 - `callback`: Function which is called if the list item is pressed. Can also be read as an `onTap`.
-- `position`: Specified position within the given list (overall). This applies the right styling according to the platforms default (currently only iOS 15). 
+- `position`: Specified position within the gi\ven list (overall). This applies the right styling according to the platforms default (currently only iOS 15). 
 
 ### Examples
 
@@ -23,7 +23,7 @@ The `DynamicListItem` widget has the following parameters:
 Column(
   children: <Widget>[
     DynamicListItem(title: "Title"),
-  ];
+  ]
 )
 ```
 
