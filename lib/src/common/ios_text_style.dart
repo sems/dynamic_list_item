@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Textstyle class for [Text] on iOS.
@@ -15,9 +14,8 @@ import 'package:flutter/material.dart';
 /// Each of the above parameters can be changed if you want to. Note: please change the
 /// letterSpacing at/as last, be ULTRA sure that the letterSpacing is different then the
 /// default and you want to change it to something else.
-// ignore: camel_case_types
-class iOSTextStyle extends TextStyle {
-  iOSTextStyle({
+class IOSTextStyle extends TextStyle {
+  IOSTextStyle({
     double fontSize = 17.0,
     FontWeight fontWeight = FontWeight.w400,
     Color color = Colors.black,
