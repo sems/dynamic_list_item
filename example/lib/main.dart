@@ -10,17 +10,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+        useMaterial3: true,
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Dynamic List Items'),
-          backgroundColor: Colors.amber,
         ),
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 16),
-          color: Colors.black26,
           child: Column(
             children: [
-              Text("Within ListView"),
+              Text(
+                "Within ListView", 
+                style: Theme.of(context).textTheme.headline6,
+              ),
               Container(
                 child: SizedBox(
                   height: 150.0,
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text("Within Column"),
+                  Text("Within Column", style: Theme.of(context).textTheme.headline6,),
                   DynamicListItem(
                     title: "Title and position only",
                     position: ListItemPostition.Top,
