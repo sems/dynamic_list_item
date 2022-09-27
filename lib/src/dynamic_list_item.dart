@@ -65,6 +65,14 @@ class DynamicListItem extends StatefulWidget {
 }
 
 class _DynamicListItemState extends State<DynamicListItem> {
+  late Color _backgroundColor;
+
+  @override
+  void initState() {
+    super.initState();
+    _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white;
+  }
+
   Widget buildOptionalDivider() {
     if (widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle) {
       return Divider(
@@ -77,8 +85,6 @@ class _DynamicListItemState extends State<DynamicListItem> {
 
   @override
   Widget build(BuildContext context) {
-    Color _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white;
-
     if (Platform.isIOS) {
       BorderRadius _borderRadius = BorderRadius.zero;
       double _constantPadding = widget._constants.defaultHorizontalPadding;
