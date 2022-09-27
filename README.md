@@ -11,10 +11,12 @@ Simply start using the `DynamicListItem` widget in your lists. This can be done 
 
 The `DynamicListItem` widget has the following parameters:
 
-- `@required title`: Used for the primary label in the list item.
+- `@required String title`: Used for the primary label in the list item.
 - `trailing`: Trailing content within the list item. For example, an icon or a switch widget.
 - `callback`: Function which is called if the list item is pressed. Can also be read as an `onTap`.
-- `position`: Specified position within the gi\ven list (overall). This applies the right styling according to the platforms default (currently only iOS 15). 
+- `position`: Specified position within the gi\ven list (overall). This applies the right styling according to the platforms default; including `Divider`'s. 
+- `style`: Custom styling for the list items. Think of text styles, color, etc.
+- `alwaysUseFlutterTextStyle`: Which can be used as an 'override switch'. This ignores _almost_ all (default) styling this package provides. By enabling this override, Flutter's default styling will be applied.
 
 ### Examples
 
@@ -28,7 +30,6 @@ Column(
 ```
 
 #### Implementation with trailing and positional styling
-_Note: The positional styling is only applied on iOS as the time of writing._
 ```dart
 ListView(
   padding: const EdgeInsets.all(8),

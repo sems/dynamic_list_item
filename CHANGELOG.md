@@ -1,3 +1,10 @@
+## 1.0.0
+* Custom-styling is now included! This can be done using the `DynamicListItemStyle`. Make sure to read the documentation to learn the exact workings;
+* Updated readme;
+* Upgraded example Android project;
+* Added documentation;
+* Some internal renamings;
+
 ## 0.0.5
 * Now `Divider` is automaticly included on Android.
 ## 0.0.4
