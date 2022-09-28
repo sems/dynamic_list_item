@@ -1,4 +1,4 @@
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 
 class DynamicListItemStyle {
   /// TextStyle which is used for the title on Android.
@@ -14,18 +14,33 @@ class DynamicListItemStyle {
   /// The background color of the list item
   /// 
   /// If the background color is not set, it will default to the `Colors.white`
-  final Color? tileBackgroundColor;
+  final Color tileBackgroundColor;
 
   /// The background of the list item when it is pressed down. (Only for iOS)
   /// 
   /// If not set, it will default to iOS's default color for iOS,.
   /// Android will always use the Theme defaults.
   final Color? tileBackgroundColorOnDown;
+
+  /// To specifiy whether to always use the default Flutter/ThemeData for textStyles;
+  /// 
+  /// If this is set to `true`, the `androidTextStyle` and `iOSTextStyle` properties from [DynamicListItemStyle] will be ignored.
+  /// This includes their default/fallback values.
+  /// Also the `tileBackgroundColor` for Android will be ignored.
+  final bool alwaysUseFlutterTextStyle;
+
+  /// An override which can be used to override styling for a specific platform.
+  /// 
+  /// Currently two platforms are supported: `TargetPlatform.iOS` and `TargetPlatform.android`.
+  /// For example when you want to use iOS styling on the Android platform, you can set this to `TargetPlatform.iOS`.
+  final TargetPlatform? overridePlatformStyling;
   
   const DynamicListItemStyle({
     this.androidTextStyle,
     this.iOSTextStyle,
-    this.tileBackgroundColor,
+    this.tileBackgroundColor = Colors.white,
     this.tileBackgroundColorOnDown,
+    this.alwaysUseFlutterTextStyle = false,
+    this.overridePlatformStyling,
   });
 }

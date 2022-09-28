@@ -42,21 +42,14 @@ class DynamicListItem extends StatefulWidget {
   /// 
   /// This can be used to change the styling of the list items. 
   /// This includes properties like background color, text color, text size, etc.
-  final DynamicListItemStyle? style;
-
-  /// To specifiy whether to always use the default Flutter/ThemeData for textStyles;
-  /// 
-  /// If this is set to `true`, the `androidTextStyle` and `iOSTextStyle` properties from [DynamicListItemStyle] will be ignored.
-  /// This includes their default/fallback values.
-  final bool alwaysUseFlutterTextStyle;
+  DynamicListItemStyle style;
 
   DynamicListItem({
     required this.title, 
     this.trailing, 
     this.position, 
     this.callback, 
-    this.style, 
-    this.alwaysUseFlutterTextStyle = false,
+    this.style = const DynamicListItemStyle(), 
     this.testing
   });
 
@@ -70,7 +63,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
   @override
   void initState() {
     super.initState();
-    _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white;
+    _backgroundColor = widget.style.tileBackgroundColor;
   }
 
   Widget buildOptionalDivider() {
@@ -85,7 +78,9 @@ class _DynamicListItemState extends State<DynamicListItem> {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if ((Platform.isIOS 
+    || widget.style.overridePlatformStyling == TargetPlatform.iOS)
+    && widget.style.overridePlatformStyling != TargetPlatform.android) {
       BorderRadius _borderRadius = BorderRadius.zero;
       double _constantPadding = widget._constants.defaultHorizontalPadding;
 
@@ -127,8 +122,8 @@ class _DynamicListItemState extends State<DynamicListItem> {
                       padding: EdgeInsets.fromLTRB(widget._constants.defaultHorizontalPadding, 13.5, 20, 13.5),
                       child: Text(
                         widget.title,
-                        style: widget.alwaysUseFlutterTextStyle 
-                          ? widget.style?.iOSTextStyle ?? IOSTextStyle() 
+                        style: widget.style.alwaysUseFlutterTextStyle 
+                          ? widget.style.iOSTextStyle ?? IOSTextStyle() 
                           : null,
                       ),
                     ),
@@ -146,24 +141,24 @@ class _DynamicListItemState extends State<DynamicListItem> {
           ),
           onTap: widget.callback,
           onTapCancel: () {
-            setState(() => _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white);
+            setState(() => _backgroundColor = widget.style.tileBackgroundColor);
           },
         ),
         onPointerDown: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColor = widget.style?.tileBackgroundColorOnDown ?? widget._constants.iosListTileDownColor);
+            setState(() => _backgroundColor = widget.style.tileBackgroundColorOnDown ?? widget._constants.iosListTileDownColor);
           }
         },
         onPointerUp: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white);
+            setState(() => _backgroundColor = widget.style.tileBackgroundColor);
           }
         },
       );
     } 
 
     Widget androidReturn = Container(
-      color: widget.style?.tileBackgroundColor ?? Colors.white,
+      color: widget.style.alwaysUseFlutterTextStyle ? null : widget.style.tileBackgroundColor,
       child: Column(
         children: [
           widget.position == ListItemPostition.Top 
@@ -171,6 +166,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
             ? Divider( height: 1) 
             : Container(),
           Material(
+            color: widget.style.alwaysUseFlutterTextStyle ? null : widget.style.tileBackgroundColor,
             child: InkWell(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,8 +175,8 @@ class _DynamicListItemState extends State<DynamicListItem> {
                     padding: EdgeInsets.all(20),
                     child: Text(
                       widget.title,
-                      style: widget.alwaysUseFlutterTextStyle 
-                        ? widget.style?.androidTextStyle ?? widget._constants.androidPrimaryTextStyle 
+                      style: widget.style.alwaysUseFlutterTextStyle 
+                        ? widget.style.androidTextStyle ?? widget._constants.androidPrimaryTextStyle 
                         : null,
                     ),
                   ),

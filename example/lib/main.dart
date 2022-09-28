@@ -8,6 +8,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var styling = DynamicListItemStyle(
+      overridePlatformStyling: TargetPlatform.iOS,
+    );
+
     return MaterialApp(
       title: 'Welcome to Flutter',
       theme: ThemeData(
@@ -26,6 +30,10 @@ class MyApp extends StatelessWidget {
                 "Within ListView", 
                 style: Theme.of(context).textTheme.headline6,
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8), 
+                child: Text("The following list also uses the override for iOS styling."),
+              ),
               Container(
                 child: SizedBox(
                   height: 150.0,
@@ -34,10 +42,17 @@ class MyApp extends StatelessWidget {
                       DynamicListItem(
                         title: "Item 1",
                         position: ListItemPostition.Top,
+                        style: styling,
                       ),
                       DynamicListItem(
                         title: "Item 2",
+                        position: ListItemPostition.Middle,
+                        style: styling,
+                      ),
+                      DynamicListItem(
+                        title: "Item 3",
                         position: ListItemPostition.Bottom,
+                        style: styling,
                       ),
                     ],
                   ),
