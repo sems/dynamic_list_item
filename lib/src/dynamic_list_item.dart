@@ -114,7 +114,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
                           13.5),
                       child: Text(
                         widget.title,
-                        style: widget.style.alwaysUseFlutterTextStyle
+                        style: widget.style.alwaysUseFlutterStyle
                             ? widget.style.iOSTextStyle ?? IOSTextStyle()
                             : null,
                       ),
@@ -157,9 +157,11 @@ class _DynamicListItemState extends State<DynamicListItem> {
     }
 
     Widget androidReturn = Container(
-      color: widget.style.alwaysUseFlutterTextStyle
-          ? null
-          : widget.style.tileBackgroundColor,
+      color: widget.style.tileBackgroundColor != Colors.white
+          ? widget.style.tileBackgroundColor
+          : widget.style.alwaysUseFlutterStyle
+              ? null
+              : widget.style.tileBackgroundColor,
       child: Column(
         children: [
           if ((widget.position == ListItemPostition.Top ||
@@ -167,9 +169,11 @@ class _DynamicListItemState extends State<DynamicListItem> {
               widget.style.useDividers)
             Divider(height: 1),
           Material(
-            color: widget.style.alwaysUseFlutterTextStyle
-                ? null
-                : widget.style.tileBackgroundColor,
+            color: widget.style.tileBackgroundColor != Colors.white
+                ? widget.style.tileBackgroundColor
+                : widget.style.alwaysUseFlutterStyle
+                    ? null
+                    : widget.style.tileBackgroundColor,
             child: InkWell(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -178,7 +182,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
                     padding: EdgeInsets.all(20),
                     child: Text(
                       widget.title,
-                      style: widget.style.alwaysUseFlutterTextStyle
+                      style: widget.style.alwaysUseFlutterStyle
                           ? widget.style.androidTextStyle ??
                               widget._constants.androidPrimaryTextStyle
                           : null,

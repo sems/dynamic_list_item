@@ -27,7 +27,7 @@ class DynamicListItemStyle {
   /// If this is set to `true`, the `androidTextStyle` and `iOSTextStyle` properties from [DynamicListItemStyle] will be ignored.
   /// This includes their default/fallback values.
   /// Also the `tileBackgroundColor` for Android will be ignored.
-  final bool alwaysUseFlutterTextStyle;
+  final bool alwaysUseFlutterStyle;
 
   /// An override which can be used to override styling for a specific platform.
   ///
@@ -46,7 +46,7 @@ class DynamicListItemStyle {
     this.iOSTextStyle,
     this.tileBackgroundColor = Colors.white,
     this.tileBackgroundColorOnDown,
-    this.alwaysUseFlutterTextStyle = false,
+    this.alwaysUseFlutterStyle = false,
     this.overridePlatformStyling,
     this.useDividers = true,
   });

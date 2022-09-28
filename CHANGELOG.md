@@ -1,3 +1,7 @@
+# 1.1.1 Hotfix
+* Rename `alwaysUseFlutterTextStyle` to `alwaysUseFlutterStyle`
+* Hotfix for `alwaysUseFlutterStyle` issue regarding background color;
+
 # 1.1.0 (Small Breaking)
 * The `alwaysUseFlutterTextStyle` property has been moved to `DynamicListItemStyle`;
 * Dividers are now made optional through a property in `DynamicListItemStyle`;
