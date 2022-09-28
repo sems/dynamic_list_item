@@ -42,7 +42,7 @@ class DynamicListItem extends StatefulWidget {
   /// 
   /// This can be used to change the styling of the list items. 
   /// This includes properties like background color, text color, text size, etc.
-  DynamicListItemStyle style;
+  final DynamicListItemStyle style;
 
   DynamicListItem({
     required this.title, 
@@ -64,16 +64,6 @@ class _DynamicListItemState extends State<DynamicListItem> {
   void initState() {
     super.initState();
     _backgroundColor = widget.style.tileBackgroundColor;
-  }
-
-  Widget buildOptionalDivider() {
-    if (widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle) {
-      return Divider(
-        height: 1, 
-        indent: widget._constants.defaultHorizontalPadding,
-      );
-    }
-    return Container();
   }
 
   @override
@@ -135,7 +125,8 @@ class _DynamicListItemState extends State<DynamicListItem> {
                     ),      
                   ],
                 ),
-                buildOptionalDivider()
+                if((widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle) && widget.style.useDividers)
+                  Divider(height: 1, indent: widget._constants.defaultHorizontalPadding),
               ],
             ),
           ),
@@ -161,10 +152,8 @@ class _DynamicListItemState extends State<DynamicListItem> {
       color: widget.style.alwaysUseFlutterTextStyle ? null : widget.style.tileBackgroundColor,
       child: Column(
         children: [
-          widget.position == ListItemPostition.Top 
-          || widget.position == ListItemPostition.StandAlone 
-            ? Divider( height: 1) 
-            : Container(),
+          if((widget.position == ListItemPostition.Top || widget.position == ListItemPostition.StandAlone) && widget.style.useDividers)
+            Divider(height: 1),
           Material(
             color: widget.style.alwaysUseFlutterTextStyle ? null : widget.style.tileBackgroundColor,
             child: InkWell(
@@ -191,12 +180,10 @@ class _DynamicListItemState extends State<DynamicListItem> {
               onTap: widget.callback,
             ),
           ),
-          widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle 
-            ? Divider( height: 1, indent: 16.0 ) 
-            : Container(),
-          widget.position == ListItemPostition.Bottom || widget.position == ListItemPostition.StandAlone 
-            ? Divider(height: 1) 
-            : Container(),
+          if((widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle) && widget.style.useDividers)
+            Divider(height: 1, indent: 16.0),
+          if((widget.position == ListItemPostition.Bottom || widget.position == ListItemPostition.StandAlone) && widget.style.useDividers)
+            Divider(height: 1),
         ],
       ),
     );

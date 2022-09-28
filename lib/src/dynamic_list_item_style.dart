@@ -34,6 +34,12 @@ class DynamicListItemStyle {
   /// Currently two platforms are supported: `TargetPlatform.iOS` and `TargetPlatform.android`.
   /// For example when you want to use iOS styling on the Android platform, you can set this to `TargetPlatform.iOS`.
   final TargetPlatform? overridePlatformStyling;
+
+  /// Default usage of dividers.
+  /// 
+  /// Set this property to `false` if you want to hide divers.
+  /// By default this property is set to `true`.
+  final bool useDividers;
   
   const DynamicListItemStyle({
     this.androidTextStyle,
@@ -42,5 +48,6 @@ class DynamicListItemStyle {
     this.tileBackgroundColorOnDown,
     this.alwaysUseFlutterTextStyle = false,
     this.overridePlatformStyling,
+    this.useDividers = true,
   });
 }
