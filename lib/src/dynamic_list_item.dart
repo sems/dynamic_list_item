@@ -12,23 +12,23 @@ typedef DynamicListItemCallback = void Function();
 
 class DynamicListItem extends StatefulWidget {
   /// The title of the list item
-  /// 
+  ///
   /// The title is required and will be displayed on the left side of the list item.
   final String title;
 
   /// The trailing widget of the list item
-  /// 
+  ///
   /// This can be any widget, but it is recommended to use an Icon.
   final Widget? trailing;
 
   /// The position of the list item in the list.
-  /// 
+  ///
   /// This position is used to determine the border-radius of the list item on iOS.
   /// For Android is determines if a divider should be shown above or below the list item.
   final ListItemPostition? position;
 
   /// The callback method for the list item.
-  /// 
+  ///
   /// This method will be called in the `onTap` method of the list item.
   final DynamicListItemCallback? callback;
 
@@ -39,26 +39,18 @@ class DynamicListItem extends StatefulWidget {
   final Constants _constants = new Constants();
 
   /// Custom styling for the list items.
-  /// 
-  /// This can be used to change the styling of the list items. 
+  ///
+  /// This can be used to change the styling of the list items.
   /// This includes properties like background color, text color, text size, etc.
-  final DynamicListItemStyle? style;
+  final DynamicListItemStyle style;
 
-  /// To specifiy whether to always use the default Flutter/ThemeData for textStyles;
-  /// 
-  /// If this is set to `true`, the `androidTextStyle` and `iOSTextStyle` properties from [DynamicListItemStyle] will be ignored.
-  /// This includes their default/fallback values.
-  final bool alwaysUseFlutterTextStyle;
-
-  DynamicListItem({
-    required this.title, 
-    this.trailing, 
-    this.position, 
-    this.callback, 
-    this.style, 
-    this.alwaysUseFlutterTextStyle = false,
-    this.testing
-  });
+  DynamicListItem(
+      {required this.title,
+      this.trailing,
+      this.position,
+      this.callback,
+      this.style = const DynamicListItemStyle(),
+      this.testing});
 
   @override
   State<StatefulWidget> createState() => _DynamicListItemState();
@@ -70,22 +62,14 @@ class _DynamicListItemState extends State<DynamicListItem> {
   @override
   void initState() {
     super.initState();
-    _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white;
-  }
-
-  Widget buildOptionalDivider() {
-    if (widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle) {
-      return Divider(
-        height: 1, 
-        indent: widget._constants.defaultHorizontalPadding,
-      );
-    }
-    return Container();
+    _backgroundColor = widget.style.tileBackgroundColor;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if ((Platform.isIOS ||
+            widget.style.overridePlatformStyling == TargetPlatform.iOS) &&
+        widget.style.overridePlatformStyling != TargetPlatform.android) {
       BorderRadius _borderRadius = BorderRadius.zero;
       double _constantPadding = widget._constants.defaultHorizontalPadding;
 
@@ -107,29 +91,32 @@ class _DynamicListItemState extends State<DynamicListItem> {
           _borderRadius = BorderRadius.all(Radius.circular(_constantPadding));
           break;
         default:
-          //When it is middle or nothing.
+        //When it is middle or nothing.
       }
-      
+
       return Listener(
         child: GestureDetector(
           child: Container(
             decoration: BoxDecoration(
-              color: _backgroundColor,
-              borderRadius: _borderRadius
-            ),
-            margin: EdgeInsets.symmetric(horizontal: widget._constants.defaultHorizontalPadding),
+                color: _backgroundColor, borderRadius: _borderRadius),
+            margin: EdgeInsets.symmetric(
+                horizontal: widget._constants.defaultHorizontalPadding),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.fromLTRB(widget._constants.defaultHorizontalPadding, 13.5, 20, 13.5),
+                      padding: EdgeInsets.fromLTRB(
+                          widget._constants.defaultHorizontalPadding,
+                          13.5,
+                          20,
+                          13.5),
                       child: Text(
                         widget.title,
-                        style: widget.alwaysUseFlutterTextStyle 
-                          ? widget.style?.iOSTextStyle ?? IOSTextStyle() 
-                          : null,
+                        style: widget.style.alwaysUseFlutterTextStyle
+                            ? widget.style.iOSTextStyle ?? IOSTextStyle()
+                            : null,
                       ),
                     ),
                     Flexible(
@@ -137,40 +124,52 @@ class _DynamicListItemState extends State<DynamicListItem> {
                         padding: EdgeInsets.only(right: 15),
                         child: widget.trailing,
                       ),
-                    ),      
+                    ),
                   ],
                 ),
-                buildOptionalDivider()
+                if ((widget.position == ListItemPostition.Top ||
+                        widget.position == ListItemPostition.Middle) &&
+                    widget.style.useDividers)
+                  Divider(
+                      height: 1,
+                      indent: widget._constants.defaultHorizontalPadding),
               ],
             ),
           ),
           onTap: widget.callback,
           onTapCancel: () {
-            setState(() => _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white);
+            setState(() => _backgroundColor = widget.style.tileBackgroundColor);
           },
         ),
         onPointerDown: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColor = widget.style?.tileBackgroundColorOnDown ?? widget._constants.iosListTileDownColor);
+            setState(() => _backgroundColor =
+                widget.style.tileBackgroundColorOnDown ??
+                    widget._constants.iosListTileDownColor);
           }
         },
         onPointerUp: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColor = widget.style?.tileBackgroundColor ?? Colors.white);
+            setState(() => _backgroundColor = widget.style.tileBackgroundColor);
           }
         },
       );
-    } 
+    }
 
     Widget androidReturn = Container(
-      color: widget.style?.tileBackgroundColor ?? Colors.white,
+      color: widget.style.alwaysUseFlutterTextStyle
+          ? null
+          : widget.style.tileBackgroundColor,
       child: Column(
         children: [
-          widget.position == ListItemPostition.Top 
-          || widget.position == ListItemPostition.StandAlone 
-            ? Divider( height: 1) 
-            : Container(),
+          if ((widget.position == ListItemPostition.Top ||
+                  widget.position == ListItemPostition.StandAlone) &&
+              widget.style.useDividers)
+            Divider(height: 1),
           Material(
+            color: widget.style.alwaysUseFlutterTextStyle
+                ? null
+                : widget.style.tileBackgroundColor,
             child: InkWell(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,9 +178,10 @@ class _DynamicListItemState extends State<DynamicListItem> {
                     padding: EdgeInsets.all(20),
                     child: Text(
                       widget.title,
-                      style: widget.alwaysUseFlutterTextStyle 
-                        ? widget.style?.androidTextStyle ?? widget._constants.androidPrimaryTextStyle 
-                        : null,
+                      style: widget.style.alwaysUseFlutterTextStyle
+                          ? widget.style.androidTextStyle ??
+                              widget._constants.androidPrimaryTextStyle
+                          : null,
                     ),
                   ),
                   Flexible(
@@ -195,23 +195,23 @@ class _DynamicListItemState extends State<DynamicListItem> {
               onTap: widget.callback,
             ),
           ),
-          widget.position == ListItemPostition.Top || widget.position == ListItemPostition.Middle 
-            ? Divider( height: 1, indent: 16.0 ) 
-            : Container(),
-          widget.position == ListItemPostition.Bottom || widget.position == ListItemPostition.StandAlone 
-            ? Divider(height: 1) 
-            : Container(),
+          if ((widget.position == ListItemPostition.Top ||
+                  widget.position == ListItemPostition.Middle) &&
+              widget.style.useDividers)
+            Divider(height: 1, indent: 16.0),
+          if ((widget.position == ListItemPostition.Bottom ||
+                  widget.position == ListItemPostition.StandAlone) &&
+              widget.style.useDividers)
+            Divider(height: 1),
         ],
       ),
     );
-    
-    return widget.testing == true && widget.testing != null 
-      ? MediaQuery(
-        data: MediaQueryData.fromWindow(ui.window), 
-        child: Directionality(
-          textDirection: TextDirection.ltr, 
-          child: androidReturn 
-      )) 
-      : androidReturn;
+
+    return widget.testing == true && widget.testing != null
+        ? MediaQuery(
+            data: MediaQueryData.fromWindow(ui.window),
+            child: Directionality(
+                textDirection: TextDirection.ltr, child: androidReturn))
+        : androidReturn;
   }
 }
