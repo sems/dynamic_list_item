@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import './common/constants.dart';
 import './common/list_item_position.dart';
-import './common/ios_text_style.dart';
 
 typedef DynamicListItemCallback = void Function();
 
@@ -56,13 +55,29 @@ class DynamicListItem extends StatefulWidget {
   State<StatefulWidget> createState() => _DynamicListItemState();
 }
 
-class _DynamicListItemState extends State<DynamicListItem> {
+class _DynamicListItemState extends State<DynamicListItem> with WidgetsBindingObserver {
   late Color _backgroundColoriOS;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
-    _backgroundColoriOS = widget.style.tileBackgroundColoriOS ?? Constants().iosBackgroundColor;
+    
+    _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor;
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    setState(() {
+      _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor;
+    });
+    super.didChangePlatformBrightness();
   }
 
   @override
@@ -116,9 +131,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
                           13.5),
                       child: Text(
                         widget.title,
-                        style: widget.style.alwaysUseFlutterStyle
-                            ? widget.style.iOSTextStyle ?? IOSTextStyle()
-                            : null,
+                        style: widget.style.iOSTextStyle ?? null,
                       ),
                     ),
                     Flexible(
@@ -140,17 +153,19 @@ class _DynamicListItemState extends State<DynamicListItem> {
           ),
           onTap: widget.callback,
           onTapCancel: () {
-            setState(() => _backgroundColoriOS = widget.style.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor);
+            setState(() => _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor);
           },
         ),
         onPointerDown: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColoriOS = widget.style.tileBackgroundColorOnDowniOS ?? widget._constants.iosListTileDownColor);
+            setState(() {
+              _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColorOnDowniOS ?? widget._constants.iosListTileDownColor;
+            });
           }
         },
         onPointerUp: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColoriOS = widget.style.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor);
+            setState(() => _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor);
           }
         },
       );
@@ -163,7 +178,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
             widget.style.useDividers)
           Divider(height: 1),
         Material(
-          color: widget.style.tileBackgroundColorAndroid ?? null,
+          color: widget.style.colorTheme.tileBackgroundColorAndroid ?? null,
           child: InkWell(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,10 +187,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
                   padding: EdgeInsets.all(20),
                   child: Text(
                     widget.title,
-                    style: widget.style.alwaysUseFlutterStyle
-                        ? widget.style.androidTextStyle ??
-                            widget._constants.androidPrimaryTextStyle
-                        : null,
+                    style: widget.style.androidTextStyle ?? null,
                   ),
                 ),
                 Flexible(

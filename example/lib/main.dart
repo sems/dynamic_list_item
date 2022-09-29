@@ -10,7 +10,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var styling = DynamicListItemStyle(
       overridePlatformStyling: TargetPlatform.android,
-      tileBackgroundColorAndroid: Colors.amber[600],
+      colorTheme: DynamicListItemColorTheme(
+        // tileBackgroundColorAndroid: Colors.amber[600],
+        tileBackgroundColoriOS: Colors.amber[600],
+      ),
     );
 
     return MaterialApp(
@@ -33,10 +36,7 @@ class MyApp extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Column(
               children: [
-                Text(
-                  "Within ListView",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
+                Text("Within ListView"),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                   child: Text(
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                           position: ListItemPostition.Bottom,
                           style: styling,
                           callback: () {
-                            print("Item 3 was pressed");
+                            // Do something
                           },
                         ),
                       ],
@@ -71,10 +71,7 @@ class MyApp extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Text(
-                      "Within Column",
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
+                    Text("Within Column"),
                     DynamicListItem(
                       title: "Title and position only",
                       position: ListItemPostition.Top,
