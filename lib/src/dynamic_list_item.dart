@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import './common/constants.dart';
 import './common/list_item_position.dart';
-import './common/ios_text_style.dart';
 
 typedef DynamicListItemCallback = void Function();
 
@@ -56,13 +55,32 @@ class DynamicListItem extends StatefulWidget {
   State<StatefulWidget> createState() => _DynamicListItemState();
 }
 
-class _DynamicListItemState extends State<DynamicListItem> {
-  late Color _backgroundColor;
+class _DynamicListItemState extends State<DynamicListItem>
+    with WidgetsBindingObserver {
+  late Color _backgroundColoriOS;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
-    _backgroundColor = widget.style.tileBackgroundColor;
+
+    _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ??
+        widget._constants.iosBackgroundColor;
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    setState(() {
+      _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ??
+          widget._constants.iosBackgroundColor;
+    });
+    super.didChangePlatformBrightness();
   }
 
   @override
@@ -98,7 +116,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
         child: GestureDetector(
           child: Container(
             decoration: BoxDecoration(
-                color: _backgroundColor, borderRadius: _borderRadius),
+                color: _backgroundColoriOS, borderRadius: _borderRadius),
             margin: EdgeInsets.symmetric(
                 horizontal: widget._constants.defaultHorizontalPadding),
             child: Column(
@@ -114,9 +132,7 @@ class _DynamicListItemState extends State<DynamicListItem> {
                           13.5),
                       child: Text(
                         widget.title,
-                        style: widget.style.alwaysUseFlutterStyle
-                            ? widget.style.iOSTextStyle ?? IOSTextStyle()
-                            : null,
+                        style: widget.style.iOSTextStyle ?? null,
                       ),
                     ),
                     Flexible(
@@ -138,77 +154,69 @@ class _DynamicListItemState extends State<DynamicListItem> {
           ),
           onTap: widget.callback,
           onTapCancel: () {
-            setState(() => _backgroundColor = widget.style.tileBackgroundColor);
+            setState(() => _backgroundColoriOS =
+                widget.style.colorTheme.tileBackgroundColoriOS ??
+                    widget._constants.iosBackgroundColor);
           },
         ),
         onPointerDown: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColor =
-                widget.style.tileBackgroundColorOnDown ??
-                    widget._constants.iosListTileDownColor);
+            setState(() {
+              _backgroundColoriOS =
+                  widget.style.colorTheme.tileBackgroundColorOnDowniOS ??
+                      widget._constants.iosListTileDownColor;
+            });
           }
         },
         onPointerUp: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColor = widget.style.tileBackgroundColor);
+            setState(() => _backgroundColoriOS =
+                widget.style.colorTheme.tileBackgroundColoriOS ??
+                    widget._constants.iosBackgroundColor);
           }
         },
       );
     }
 
-    Widget androidReturn = Container(
-      color: widget.style.tileBackgroundColor != Colors.white
-          ? widget.style.tileBackgroundColor
-          : widget.style.alwaysUseFlutterStyle
-              ? null
-              : widget.style.tileBackgroundColor,
-      child: Column(
-        children: [
-          if ((widget.position == ListItemPostition.Top ||
-                  widget.position == ListItemPostition.StandAlone) &&
-              widget.style.useDividers)
-            Divider(height: 1),
-          Material(
-            color: widget.style.tileBackgroundColor != Colors.white
-                ? widget.style.tileBackgroundColor
-                : widget.style.alwaysUseFlutterStyle
-                    ? null
-                    : widget.style.tileBackgroundColor,
-            child: InkWell(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      widget.title,
-                      style: widget.style.alwaysUseFlutterStyle
-                          ? widget.style.androidTextStyle ??
-                              widget._constants.androidPrimaryTextStyle
-                          : null,
-                    ),
+    Widget androidReturn = Column(
+      children: [
+        if ((widget.position == ListItemPostition.Top ||
+                widget.position == ListItemPostition.StandAlone) &&
+            widget.style.useDividers)
+          Divider(height: 1),
+        Material(
+          color: widget.style.colorTheme.tileBackgroundColorAndroid ?? null,
+          child: InkWell(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    widget.title,
+                    style: widget.style.androidTextStyle ?? null,
                   ),
-                  Flexible(
-                    child: Container(
-                      padding: EdgeInsets.only(right: 20),
-                      child: widget.trailing,
-                    ),
+                ),
+                Flexible(
+                  child: Container(
+                    padding: EdgeInsets.only(right: 20),
+                    child: widget.trailing,
                   ),
-                ],
-              ),
-              onTap: widget.callback,
+                ),
+              ],
             ),
+            onTap: widget.callback,
           ),
-          if ((widget.position == ListItemPostition.Top ||
-                  widget.position == ListItemPostition.Middle) &&
-              widget.style.useDividers)
-            Divider(height: 1, indent: 16.0),
-          if ((widget.position == ListItemPostition.Bottom ||
-                  widget.position == ListItemPostition.StandAlone) &&
-              widget.style.useDividers)
-            Divider(height: 1),
-        ],
-      ),
+        ),
+        if ((widget.position == ListItemPostition.Top ||
+                widget.position == ListItemPostition.Middle) &&
+            widget.style.useDividers)
+          Divider(height: 1),
+        if ((widget.position == ListItemPostition.Bottom ||
+                widget.position == ListItemPostition.StandAlone) &&
+            widget.style.useDividers)
+          Divider(height: 1),
+      ],
     );
 
     return widget.testing == true && widget.testing != null
