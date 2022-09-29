@@ -55,15 +55,17 @@ class DynamicListItem extends StatefulWidget {
   State<StatefulWidget> createState() => _DynamicListItemState();
 }
 
-class _DynamicListItemState extends State<DynamicListItem> with WidgetsBindingObserver {
+class _DynamicListItemState extends State<DynamicListItem>
+    with WidgetsBindingObserver {
   late Color _backgroundColoriOS;
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
-    
-    _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor;
+
+    _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ??
+        widget._constants.iosBackgroundColor;
   }
 
   @override
@@ -75,7 +77,8 @@ class _DynamicListItemState extends State<DynamicListItem> with WidgetsBindingOb
   @override
   void didChangePlatformBrightness() {
     setState(() {
-      _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor;
+      _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ??
+          widget._constants.iosBackgroundColor;
     });
     super.didChangePlatformBrightness();
   }
@@ -113,9 +116,7 @@ class _DynamicListItemState extends State<DynamicListItem> with WidgetsBindingOb
         child: GestureDetector(
           child: Container(
             decoration: BoxDecoration(
-              color: _backgroundColoriOS,
-              borderRadius: _borderRadius
-            ),
+                color: _backgroundColoriOS, borderRadius: _borderRadius),
             margin: EdgeInsets.symmetric(
                 horizontal: widget._constants.defaultHorizontalPadding),
             child: Column(
@@ -153,19 +154,25 @@ class _DynamicListItemState extends State<DynamicListItem> with WidgetsBindingOb
           ),
           onTap: widget.callback,
           onTapCancel: () {
-            setState(() => _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor);
+            setState(() => _backgroundColoriOS =
+                widget.style.colorTheme.tileBackgroundColoriOS ??
+                    widget._constants.iosBackgroundColor);
           },
         ),
         onPointerDown: (_) {
           if (widget.callback != null) {
             setState(() {
-              _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColorOnDowniOS ?? widget._constants.iosListTileDownColor;
+              _backgroundColoriOS =
+                  widget.style.colorTheme.tileBackgroundColorOnDowniOS ??
+                      widget._constants.iosListTileDownColor;
             });
           }
         },
         onPointerUp: (_) {
           if (widget.callback != null) {
-            setState(() => _backgroundColoriOS = widget.style.colorTheme.tileBackgroundColoriOS ?? widget._constants.iosBackgroundColor);
+            setState(() => _backgroundColoriOS =
+                widget.style.colorTheme.tileBackgroundColoriOS ??
+                    widget._constants.iosBackgroundColor);
           }
         },
       );
@@ -214,8 +221,9 @@ class _DynamicListItemState extends State<DynamicListItem> with WidgetsBindingOb
 
     return widget.testing == true && widget.testing != null
         ? MediaQuery(
-          data: MediaQueryData.fromWindow(ui.window),
-          child: Directionality(textDirection: TextDirection.ltr, child: androidReturn))
+            data: MediaQueryData.fromWindow(ui.window),
+            child: Directionality(
+                textDirection: TextDirection.ltr, child: androidReturn))
         : androidReturn;
   }
 }

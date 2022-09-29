@@ -12,8 +12,9 @@ class DynamicListItemStyle {
   /// If not specifiek the default value is: `TextStyle(double fontSize = 17, FontWeight fontWeight = FontWeight.w400, Color color = Colors.black,fontFamily: "SF Pro Text", double letterSpacing = -0.24)`. Which is the default for iOS' own list-items;
   final TextStyle? iOSTextStyle;
 
-
-
+  /// Will provide custom colors for the list item.
+  ///
+  /// If not specified, the default colors will be used.
   final DynamicListItemColorTheme colorTheme;
 
   /// An override which can be used to override styling for a specific platform.

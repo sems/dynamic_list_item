@@ -11,11 +11,13 @@ class Constants {
   Color get iosBackgroundColorDark => Color.fromRGBO(29, 28, 30, 1.0);
   Color get iosListTileDownColorDark => Color.fromRGBO(44, 44, 46, 1.0);
 
-  Color get iosBackgroundColor => SchedulerBinding.instance.window.platformBrightness == Brightness.dark
-      ? iosBackgroundColorDark
-      : iosBackgroundColorLight;
+  Color get iosBackgroundColor =>
+      SchedulerBinding.instance.window.platformBrightness == Brightness.dark
+          ? iosBackgroundColorDark
+          : iosBackgroundColorLight;
 
-  Color get iosListTileDownColor => SchedulerBinding.instance.window.platformBrightness == Brightness.dark
-      ? iosListTileDownColorDark
-      : iosListTileDownColorLight;
+  Color get iosListTileDownColor =>
+      SchedulerBinding.instance.window.platformBrightness == Brightness.dark
+          ? iosListTileDownColorDark
+          : iosListTileDownColorLight;
 }
