@@ -3,21 +3,24 @@ import 'package:flutter/material.dart';
 class DynamicListItemColorTheme {
   /// The background color of the list item for iOS
   ///
-  /// If the background color is not set, it will default to the `Color.fromRGBO(239, 239, 244, 1.0)`.
+  /// If the background color is not set, it will default to iOS' default.
   final Color? tileBackgroundColoriOS;
 
-  /// The background of the list item when it is pressed down. (Only for iOS)
+  /// The background of the list item when it is pressed down. (iOS only)
   ///
-  /// If not set, it will default to iOS's default color for iOS.
-  /// Which is: `Color.fromRGBO(224, 222, 230, 0.5)`.
-  /// Android will always use the Theme defaults.
+  /// If not set, it will default to iOS's default color.
+  /// Android will materialize the [tileBackgroundColorAndroid].
   final Color? tileBackgroundColorOnDowniOS;
 
   /// The background color of the list item for Android
   ///
-  /// If the background color is not set, it will default to the `Colors.white`
+  /// If the background color is not set, it will default to the `Theme.canvasColor`.
   final Color? tileBackgroundColorAndroid;
 
+  /// Colors used for styling the list item.
+  ///
+  /// If using dark-mode and `DynamicListItemColorTheme`, it is adviced to use Colors from ThemeData.
+  /// Since those will automatically be change when the Theme.brightness changes.
   const DynamicListItemColorTheme({
     this.tileBackgroundColoriOS,
     this.tileBackgroundColorOnDowniOS,

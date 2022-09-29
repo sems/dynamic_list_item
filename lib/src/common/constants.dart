@@ -18,6 +18,4 @@ class Constants {
   Color get iosListTileDownColor => SchedulerBinding.instance.window.platformBrightness == Brightness.dark
       ? iosListTileDownColorDark
       : iosListTileDownColorLight;
-
-  TextStyle get androidPrimaryTextStyle => TextStyle(fontSize: 18);
 }
