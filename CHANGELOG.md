@@ -1,3 +1,9 @@
+# 1.2.0 (Breaking)
+* The `alwaysUseFlutterStyle` property is now deprecated. Since all other styling options are now optional;
+* Added new `DynamicListItemColorTheme` property to `DynamicListItemStyle`. This property holds all the color styling which was previously located in `DynamicListItemStyle`;
+* Updated default colors for iOS and Android;
+* Updated example;
+
 # 1.1.1 Hotfix
 * Rename `alwaysUseFlutterTextStyle` to `alwaysUseFlutterStyle`
 * Hotfix for `alwaysUseFlutterStyle` issue regarding background color;
