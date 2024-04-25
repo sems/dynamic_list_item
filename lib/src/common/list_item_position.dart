@@ -1,1 +1,6 @@
-enum ListItemPostition { Top, Middle, Bottom, StandAlone }
+enum ListItemPostition { 
+  Top, 
+  Middle, 
+  Bottom, 
+  StandAlone 
+}
