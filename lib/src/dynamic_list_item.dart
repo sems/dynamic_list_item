@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:dynamic_list_item/src/dynamic_list_item_style.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +54,7 @@ class DynamicListItem extends StatefulWidget {
   State<StatefulWidget> createState() => _DynamicListItemState();
 }
 
-class _DynamicListItemState extends State<DynamicListItem>
-    with WidgetsBindingObserver {
+class _DynamicListItemState extends State<DynamicListItem> with WidgetsBindingObserver {
   late Color _backgroundColoriOS;
 
   @override
@@ -85,9 +83,9 @@ class _DynamicListItemState extends State<DynamicListItem>
 
   @override
   Widget build(BuildContext context) {
-    if ((Platform.isIOS ||
-            widget.style.overridePlatformStyling == TargetPlatform.iOS) &&
-        widget.style.overridePlatformStyling != TargetPlatform.android) {
+    if ((Platform.isIOS || widget.style.overridePlatformStyling == TargetPlatform.iOS) 
+      && widget.style.overridePlatformStyling != TargetPlatform.android
+    ) {
       BorderRadius _borderRadius = BorderRadius.zero;
       double _constantPadding = widget._constants.defaultHorizontalPadding;
 
@@ -221,7 +219,7 @@ class _DynamicListItemState extends State<DynamicListItem>
 
     return widget.testing == true && widget.testing != null
         ? MediaQuery(
-            data: MediaQueryData.fromWindow(ui.window),
+            data: MediaQueryData.fromView(View.of(context)),
             child: Directionality(
                 textDirection: TextDirection.ltr, child: androidReturn))
         : androidReturn;
