@@ -148,7 +148,9 @@ class _DynamicListItemState extends State<DynamicListItem>
                     widget.style.useDividers)
                   Divider(
                       height: 1,
-                      indent: widget._constants.defaultHorizontalPadding),
+                      indent: widget._constants.defaultHorizontalPadding,
+                      color: widget._constants.iosListTileDividerColor
+                    ),
               ],
             ),
           ),

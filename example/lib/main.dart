@@ -21,11 +21,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
         useMaterial3: true,
+        scaffoldBackgroundColor: Color.fromRGBO(242, 242, 247, 1.0),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         useMaterial3: true,
         canvasColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
       ),
       home: Scaffold(
         appBar: AppBar(
