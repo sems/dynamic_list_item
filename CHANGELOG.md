@@ -1,3 +1,7 @@
+# 1.3.0
+* Improvement - iOS colors
+* Improvement - Upgrade and upgrade versions
+
 # 1.2.0 (Breaking)
 * The `alwaysUseFlutterStyle` property is now deprecated. Since all other styling options are now optional;
 * Added new `DynamicListItemColorTheme` property to `DynamicListItemStyle`. This property holds all the color styling which was previously located in `DynamicListItemStyle`;
@@ -23,15 +27,17 @@
 
 ## 0.0.5
 * Now `Divider` is automaticly included on Android;
+
 ## 0.0.4
 * Added widget tests;
 * Removed unused variables;
+
 ## 0.0.3
 * Made a single export of the necessary files;
 * Updated the example;
+
 ## 0.0.2
-
 * Now including an example;
-## 0.0.1
 
+## 0.0.1
 * Initial release including base functionality;

@@ -1,12 +1,12 @@
 name: dynamic_list_item
 description: A dynamic list item for who wants default platform styling within Flutter apps.
-version: 1.2.0
+version: 1.3.0
 homepage: 'https://github.com/sems/dynamic_list_item'
 issue_tracker: 'https://github.com/sems/dynamic_list_item/issues'
 maintainer: Sem Spanhaak (@sems)
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
